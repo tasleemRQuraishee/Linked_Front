@@ -1,0 +1,241 @@
+/* Minimal LinkedIn-like layout styles */
+:root {
+  --bg: #f3f6f8;
+  --card: #ffffff;
+  --muted: #6b7280;
+  --accent: #0a66c2;
+}
+
+html, body, #root, #app-root {
+  height: 100%;
+}
+
+/* Hide native scrollbars globally (user requested). This keeps scrolling functional but hides scrollbar UI. */
+/* Note: this may reduce discoverability and accessibility on some platforms. */
+* {
+  /* IE 10+ */
+  -ms-overflow-style: none;
+  /* Firefox */
+  scrollbar-width: none;
+}
+*::-webkit-scrollbar { display: none; width: 0; height: 0 }
+
+/* Prevent page-wide horizontal scroll caused by wide inner content */
+html, body { overflow-x: hidden }
+
+body, #app-root {
+  background: var(--bg);
+  color: #111827;
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+  margin: 0;
+}
+
+/* ensure page has room at bottom so content never gets hidden under any fixed overlays */
+body { padding-bottom: 3.5rem }
+
+.nav {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding: 0.5rem 1rem;
+  background: var(--card);
+  border-bottom:1px solid #e5e7eb;
+  position: sticky;
+  top: 0;
+  z-index: 40;
+}
+.logo-text {
+  font-weight: 700;
+  font-size: 1.2rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  text-decoration: none;
+  color: #111827;
+}
+.logo-blue {
+  background: var(--accent);
+  color: #fff;
+  padding: 0.12rem 0.45rem;
+  border-radius: 4px;
+  font-weight: 700;
+  font-size: 0.95rem;
+  line-height: 1;
+  display: inline-block;
+}
+.nav .search { margin-left:1rem; padding:0.4rem 0.6rem; border-radius:6px; border:1px solid #e5e7eb }
+.nav-right { display:flex; align-items:center; gap:0.5rem }
+.nav-right button { margin-left:0.5rem; background:transparent; border:none; padding:0.4rem 0.6rem; cursor:pointer; color: var(--accent); font-weight:600 }
+.nav-right a { text-decoration: none }
+.nav-right .muted { color: var(--muted); margin-right: 0.25rem }
+
+.nav-left { display:flex; align-items:center; gap:0.5rem }
+
+/* Buttons used across the app */
+button { font-family: inherit }
+button.primary { background: var(--accent); color: #fff; border: none; padding: 0.45rem 0.75rem; border-radius: 6px }
+button.ghost { background: transparent; border: 1px solid #e5e7eb; padding: 0.35rem 0.6rem; border-radius: 6px }
+
+.layout { max-width:1100px; margin:0 auto; display:grid; grid-template-columns: 240px 1fr 280px; gap:1rem; padding:1.5rem; flex: 1 1 auto; align-items: start }
+
+/* make the app fill the viewport so the front cover is full screen */
+#app-root { display: flex; flex-direction: column; min-height: 100vh }
+
+.left-col, .right-col { position:relative }
+.center-col { min-height:60vh; display:flex; flex-direction:column; gap:1rem; z-index:1 }
+
+.profile-card { background: var(--card); padding:1rem; border-radius:8px; text-align:center; box-shadow:0 1px 2px rgba(0,0,0,0.03) }
+.avatar { width:64px; height:64px; border-radius:50%; background:#111827; color:#fff; display:inline-flex; align-items:center; justify-content:center; font-weight:700; font-size:1.1rem; margin-bottom:0.5rem }
+.profile-card input[type="file"] { margin-top: 6px }
+.profile-card input[type="text"], .profile-card input { width: 100%; padding:6px 8px; border:1px solid #e5e7eb; border-radius:6px }
+
+/* Ensure action buttons in the profile editor are visible and accessible */
+.profile-card .primary { background: var(--accent); color: #fff; border: none; padding: 0.4rem 0.7rem; border-radius: 6px; cursor: pointer }
+.profile-card .ghost { background: transparent; border: 1px solid #e5e7eb; padding: 0.35rem 0.6rem; border-radius: 6px; color: var(--accent); cursor: pointer }
+.profile-card .ghost:hover { background: rgba(10,102,194,0.06) }
+.profile-card .primary:hover { opacity: 0.95 }
+.muted { color: var(--muted) }
+.connect { margin-top:0.5rem; background:var(--accent); color:#fff; border:none; padding:0.45rem 0.7rem; border-radius:6px; cursor:pointer }
+
+.feed { display: block; width: 100%; overflow-x: hidden; overflow-y: auto; padding-right: 8px; box-sizing: border-box }
+.feed .composer { margin-bottom:1rem; background: var(--card); padding:1rem; border-radius:8px }
+.feed { box-sizing: border-box }
+.composer textarea { width:100%; min-height:100px; border:1px solid #e5e7eb; border-radius:6px; padding:0.6rem; font-family:inherit }
+.composer-actions { text-align:right; margin-top:0.5rem }
+
+.post { background: var(--card); padding:1rem; border-radius:8px; margin-bottom:1rem; position: relative; clear: both; width: 100%; box-sizing: border-box; z-index:2 }
+.post { box-shadow: 0 1px 2px rgba(0,0,0,0.03) }
+
+/* safety: ensure posts content wraps and doesn't overflow their container */
+.post-body { white-space: pre-wrap; word-wrap: break-word; overflow-wrap: anywhere }
+.post-header { display:flex; gap:0.75rem; align-items:center }
+.post-avatar { width:40px; height:40px; border-radius:50%; background:#111827; color:#fff; display:flex; align-items:center; justify-content:center }
+.post-author { font-weight:600 }
+.post-body { margin-top:0.75rem }
+.post-actions { margin-top:0.75rem; font-size:0.9rem }
+
+/* Post action buttons (Like / Comment / Share) */
+.post-actions { display:flex; gap:0.5rem; align-items:center }
+.post-action { display:inline-flex; align-items:center; gap:0.5rem; background:transparent; border:none; color:var(--muted); padding:0.45rem 0.6rem; border-radius:6px; cursor:pointer; font-weight:600 }
+.post-action svg { width:18px; height:18px; fill: currentColor }
+.post-action:hover { background: #f3f6f8; color: var(--accent) }
+.post-action:active { transform: translateY(1px) }
+.post-action span { display:inline-block }
+
+/* liked state: red and slightly stronger */
+.post-action.liked { color: #ef4444 }
+.post-action.liked svg { fill: currentColor }
+
+/* make the comment action icon slightly smaller than other action icons */
+.post-action--comment svg { width: 14px; height: 14px }
+.post-action--comment span { font-size: 0.95em }
+
+.delete-btn { background: transparent; border: 1px solid #ef4444; color: #ef4444; padding: 0.35rem 0.6rem; border-radius:6px; cursor:pointer }
+.delete-btn:hover { background: #fee2e2 }
+
+/* Edit UI tweaks: keep file input compact so Save/Cancel remain visible */
+.post-edit input[type="file"] { display: inline-block; width: auto; max-width: 180px }
+.post-edit .primary, .post-edit .ghost { margin-left: 4px }
+/* Ensure Cancel (ghost) button text is visible in edit UI */
+.post-edit .ghost {
+  color: var(--accent); /* use app accent for Cancel */
+  background: transparent;
+  border: 1px solid var(--accent);
+  padding: 0.35rem 0.6rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+}
+.post-edit .primary { font-weight: 600 }
+
+.post-edit .ghost:hover { background: rgba(10,102,194,0.06) }
+
+.post-deleted { display: none }
+
+/* Post image styling */
+.post img { display: block; width: 100%; max-height: 500px; object-fit: cover; border-radius: 8px; margin-top: 0.6rem }
+.post img:active, .post img:focus { outline: none }
+
+/* Comments */
+.comment-box textarea { width: 100%; min-height: 70px; padding:8px; border-radius:6px; border:1px solid #e5e7eb; font-family: inherit }
+.comments-list { margin-top: 0.6rem; display:flex; flex-direction:column; gap:0.6rem }
+.comment { background: #fff; padding: 0.6rem; border-radius:6px; border:1px solid #f3f4f6; display:flex; gap:0.6rem; align-items:flex-start }
+.comment-left { width:35px; flex: 0 0 35px }
+.comment-avatar { width:29px; height:29px; border-radius:50%; object-fit:cover; box-sizing: border-box; border: 1px solid #fff; box-shadow: 0 0 0 1px rgba(0,0,0,0.03) }
+.comment-avatar.placeholder { width:29px; height:29px; border-radius:50%; background:#111827; color:#fff; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:0.95rem; box-sizing: border-box; border: 1px solid #fff; box-shadow: 0 0 0 1px rgba(0,0,0,0.03) }
+/* Increase clickable area for small avatars without changing visual size */
+.avatar-btn { padding: 2px; display: inline-flex; align-items: center; justify-content: center }
+.avatar-btn { border: none; background: transparent; padding: 0; cursor: pointer }
+.avatar-btn:focus { outline: 2px solid rgba(10,102,194,0.2); border-radius: 50% }
+.comment-body { flex:1 }
+.comment-author { font-weight:700; margin-bottom:4px }
+.comment-text { margin-bottom:6px }
+
+/* show/hide comments link */
+.show-comments-link { background: transparent; border: none; color: var(--muted); cursor: pointer; padding: 6px 0; font-weight:600 }
+.show-comments-link:hover { color: var(--accent); text-decoration: underline }
+
+/* Share modal */
+.share-modal-backdrop { position: fixed; inset: 0; background: rgba(0,0,0,0.35); display:flex; align-items:center; justify-content:center; z-index:60 }
+.share-modal { background: #fff; padding:1rem; border-radius:8px; width: 320px; max-width: 92%; box-shadow: 0 10px 30px rgba(2,6,23,0.2) }
+.share-modal h3 { margin: 0 0 0.5rem }
+.share-actions { display:grid; grid-template-columns: repeat(2, 1fr); gap:0.5rem }
+.share-actions button { padding:0.5rem; border-radius:6px; border:1px solid #e5e7eb; background:transparent; cursor:pointer; text-align:left }
+.share-actions button.primary { grid-column: 1/-1; background: var(--accent); color: #fff; border: none }
+.share-modal .ghost { border:1px solid #e5e7eb; background: transparent; padding:0.45rem 0.6rem; border-radius:6px }
+
+.placeholder { background:var(--card); padding:1rem; border-radius:8px }
+
+/* Forms and inputs */
+input, textarea { font-family: inherit }
+label { display:block; margin-bottom:4px; font-weight:600 }
+form div { margin-bottom:10px }
+input[type="text"], input[type="email"], input[type="password"], input, textarea { width:100%; padding:8px 10px; border:1px solid #e5e7eb; border-radius:6px }
+
+/* Mobile tweaks */
+@media (max-width: 900px) {
+  .layout { grid-template-columns: 1fr; padding: 0 0.6rem }
+  .right-col, .left-col { display:none }
+  .nav .search { display:none }
+  .logo-text { font-size: 1rem }
+}
+
+/* Auth page styles */
+.auth-page { display:flex; align-items:center; justify-content:center; padding: 3rem 1rem; flex: 1 }
+.auth-card { background: var(--card); padding: 2rem; width: 100%; max-width: 420px; border-radius:8px; box-shadow: 0 6px 18px rgba(10, 37, 85, 0.08); text-align: left }
+.auth-logo { font-weight:700; font-size:1.4rem; margin-bottom: 0.5rem }
+.auth-card h2 { margin-top:0; margin-bottom:1rem }
+.auth-actions { display:flex; align-items:center; justify-content:space-between; gap:0.5rem }
+.primary { background: var(--accent); color: #fff; border:none; padding: 0.6rem 0.9rem; border-radius:6px; cursor:pointer; font-weight:600 }
+.ghost-link { color: var(--accent); font-weight:600; text-decoration:none }
+button.ghost-link { background: transparent; border: none; padding: 0; cursor: pointer; color: var(--accent); font-weight:600; text-decoration: none }
+
+/* Filled blue button used for 'Open post' action: white text on accent background */
+.btn-openpost { background: var(--accent); color: #fff; border: none; padding: 0.32rem 0.6rem; border-radius: 6px; cursor: pointer; font-weight:600 }
+.btn-openpost:hover { opacity: 0.95 }
+
+@media (max-width: 480px) {
+  .auth-card { padding:1rem; margin: 0 0.5rem }
+}
+
+/* Hero / front cover */
+.hero { background: #0077B5; color: #fff; min-height: calc(100vh - 56px); display:flex; align-items:center; }
+.hero-content { max-width: 980px; margin: 0 auto; padding: 3rem 1rem; text-align: left }
+.hero h1 { font-size: 3rem; margin: 0 0 0.6rem; font-weight:700 }
+.hero .hero-sub { font-size: 1.1rem; margin-bottom:1.2rem; color: rgba(255,255,255,0.95) }
+.hero-actions { display:flex; gap:0.75rem; align-items:center }
+.hero-actions .primary { background: #fff; color: #0077B5; padding: 0.7rem 1rem; border-radius: 6px; font-weight:700 }
+.hero-actions .ghost-link { color: #fff; background: transparent; border: 1px solid rgba(255,255,255,0.25); padding: 0.6rem 0.9rem; border-radius:6px }
+
+@media (max-width: 900px) {
+  .hero h1 { font-size:2rem }
+  .hero-content { padding: 2rem 1rem }
+  .hero { min-height: calc(100vh - 48px) }
+}
+
+
+
+@media (max-width: 900px) {
+  .layout { grid-template-columns: 1fr; }
+  .right-col, .left-col { display:none }
+}
